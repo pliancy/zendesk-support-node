@@ -1,0 +1,5 @@
+
+node_modules/
+_scratch/
+.DS_Store
+lib/
