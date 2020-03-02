@@ -1,9 +1,14 @@
 .idea
 .vscode
-_scratch
-lib
 docs
 .DS_Store
+
+src
+jest.config.js
+tsconfig.json
+tslint.json
+.prettierrc.json
+lib/scratch.js
 
 # Logs
 logs
