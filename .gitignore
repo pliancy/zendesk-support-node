@@ -1,8 +1,9 @@
 .idea
 .vscode
-_scratch
-lib
-docs
+_scratch/
+lib/
+src/
+docs/
 .DS_Store
 
 # Logs

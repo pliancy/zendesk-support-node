@@ -145,7 +145,7 @@ export declare class Zendesk {
     createOrganization(organization: Organization): Promise<Organization>;
     updateOrganization(organizationId: number, organization: Organization): Promise<Organization>;
     upsertOrganization(organization: Organization): Promise<Organization>;
-    deleteOrganization(organizationId: number): Promise<Organization>;
+    deleteOrganization(organizationId: number): Promise<String>;
     getViews(): Promise<View[]>;
     createView(view: View): Promise<View>;
     updateView(viewId: number, view: View): Promise<View>;

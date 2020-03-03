@@ -166,12 +166,13 @@ export class Zendesk {
         url = `${url}/groups.json`
       }
 
-      let res = await this._zendeskRequest(
-        url,
-        { headers: this.reqHeaders }
-      )
-      // TODO: handle pagination
-      return JSON.parse(res.body)
+      let resArray: Group[] = await this._zendeskRequest(
+          url,
+          { headers: this.reqHeaders },
+          'groups'
+        )
+
+      return resArray
     } catch (err) {
       return err
     }
@@ -189,7 +190,7 @@ export class Zendesk {
           })
         }
       )
-      return JSON.parse(res.body)
+      return (JSON.parse(res.body)).group
     } catch (err) {
       throw err
     }
@@ -249,7 +250,7 @@ export class Zendesk {
         { headers: this.reqHeaders }
       )
       // TODO: handle pagination
-      return JSON.parse(res.body)
+      return(JSON.parse(res.body)).group_memberships
     } catch (err) {
       return err
     }
@@ -294,11 +295,12 @@ export class Zendesk {
 
   async getOrganizations (organizationId?: number): Promise<Organization[]> {
     try {
-      let res = await this._zendeskRequest(
+      let res: Organization[] = await this._zendeskRequest(
         `${this.domain}/organizations.json`,
-        { headers: this.reqHeaders }
+        { headers: this.reqHeaders },
+        'organizations'
       )
-      return JSON.parse(res.body)
+      return res
     } catch (err) {
       throw err
     }
@@ -330,7 +332,7 @@ export class Zendesk {
           headers: this.reqHeaders,
           method: 'POST',
           body: JSON.stringify({
-            organization: organization
+            organization
           })
         }
       )
@@ -370,13 +372,13 @@ export class Zendesk {
           })
         }
       )
-      return JSON.parse(res.body)
+      return (JSON.parse(res.body)).organization
     } catch (err) {
       throw err
     }
   }
 
-  async deleteOrganization (organizationId: number): Promise<Organization> {
+  async deleteOrganization (organizationId: number): Promise<String> {
     try {
       let res = await this._zendeskRequest(
         `${this.domain}/organizations/${organizationId}.json`,
@@ -385,7 +387,7 @@ export class Zendesk {
           method: 'DELETE'
         }
       )
-      return JSON.parse(res.body)
+      return res.body
     } catch (err) {
       throw err
     }
@@ -397,11 +399,12 @@ export class Zendesk {
 
   async getViews (): Promise<View[]> {
     try {
-      let res = await this._zendeskRequest(
+      let res: View[] = await this._zendeskRequest(
         `${this.domain}/views.json`,
-        { headers: this.reqHeaders }
+        { headers: this.reqHeaders },
+        'views'
       )
-      return JSON.parse(res.body)
+      return res
     } catch (err) {
       throw err
     }
@@ -468,11 +471,12 @@ export class Zendesk {
 
   async getTriggers (): Promise<Trigger[]> {
     try {
-      let res = await this._zendeskRequest(
+      let res: Trigger[] = await this._zendeskRequest(
         `${this.domain}/triggers.json`,
-        { headers: this.reqHeaders }
+        { headers: this.reqHeaders },
+        'triggers'
       )
-      return JSON.parse(res.body)
+      return res
     } catch (err) {
       throw err
     }
@@ -535,17 +539,16 @@ export class Zendesk {
 
   async getBrands (): Promise<Brand[]> {
     try {
-      let res = await this._zendeskRequest(
+      let res: Brand[] = await this._zendeskRequest(
         `${this.domain}/brands.json`,
-        { headers: this.reqHeaders }
+        { headers: this.reqHeaders },
+        'brands'
       )
-      return JSON.parse(res.body)
+      return res
     } catch (err) {
       throw err
     }
   }
-
-  // TODO: createBrand
 
   async createBrand (brand: Brand): Promise<Brand> {
     try {
@@ -561,6 +564,10 @@ export class Zendesk {
       )
       return JSON.parse(res.body)
     } catch (err) {
+      if (err.statusCode === 422) {
+        // TODO: make this better
+        throw new Error(`Response code 422 (Unprocessable Entity). Response body: ${err.response.body}`)
+      }
       throw err
     }
   }
@@ -606,11 +613,12 @@ export class Zendesk {
 
   async getSupportAddresses (): Promise<SupportAddress[]> {
     try {
-      let res = await this._zendeskRequest(
+      let res: SupportAddress[] = await this._zendeskRequest(
         `${this.domain}/recipient_addresses.json`,
-        { headers: this.reqHeaders }
+        { headers: this.reqHeaders },
+        'recipient_addresses'
       )
-      return JSON.parse(res.body)
+      return res
     } catch (err) {
       throw err
     }
@@ -685,12 +693,29 @@ export class Zendesk {
     }
   }
 
-  private async _zendeskRequest (url: string, options: any): Promise<any> {
+  private async _zendeskRequest (url: string, options: any, paginationKey?: string): Promise<any> {
     try {
-      let res = await got(url, {
-        ...options,
-        auth: `${this.config.username}:${this.config.password}` // take care of basic auth
-      })
+      let res: any
+
+      if (paginationKey) {
+        res = []
+        let responseBody: any
+        while (url) {
+          responseBody = await got(url, {
+            ...options,
+            auth: `${this.config.username}:${this.config.password}` // take care of basic auth
+          })
+          responseBody = JSON.parse(responseBody.body)
+          res = res.concat(responseBody[paginationKey])
+          url = responseBody.next_page
+        }
+      } else {
+        res = await got(url, {
+          ...options,
+          auth: `${this.config.username}:${this.config.password}` // take care of basic auth
+        })
+      }
+
       return res
     } catch (err) {
       throw err
