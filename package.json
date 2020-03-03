@@ -1,6 +1,6 @@
 {
   "name": "zendesk-support",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Promise-based wrapper for the Zendesk Support API with support for TypeScript types.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
