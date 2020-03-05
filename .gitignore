@@ -1,8 +1,7 @@
+lib/
 .idea
 .vscode
 _scratch/
-lib/
-src/
 docs/
 .DS_Store
 
