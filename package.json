@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/got": "^8.3.5",
-    "@types/jest": "^23.1.1",
+    "@types/jest": "^26.0.24",
     "@types/node": "^10.17.17",
     "eslint": "^5.16.0",
     "gh-pages": "^1.2.0",
