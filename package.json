@@ -14,9 +14,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "linters": {
-      "{src,test}/**/*.ts": ["tslint --fix","git add"]
-    }
+    "{src,test}/**/*.ts": "tslint --fix && git add"
   },
   "keywords": [
     "zendesk",
