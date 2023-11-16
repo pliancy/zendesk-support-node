@@ -1,5 +1,8 @@
 {
   "extends": [
     "tslint-config-standard"
-  ]
+  ],
+  "linters": {
+    "{src,test}/**/*.ts": ["tslint --fix","git add"]
+  }
 }
