@@ -33,22 +33,22 @@
     "url": "https://github.com/calebalbers/zendesk-support"
   },
   "dependencies": {
-    "got": "^8.3.2"
+    "got": "13.0.0"
   },
   "devDependencies": {
-    "@types/got": "^8.3.5",
-    "@types/jest": "^23.1.1",
-    "@types/node": "^10.17.17",
-    "eslint": "^5.16.0",
-    "gh-pages": "^1.2.0",
-    "husky": "^0.14.3",
-    "jest": "^23.1.0",
-    "lint-staged": "^7.2.0",
-    "rimraf": "^2.7.1",
-    "ts-jest": "^22.4.6",
-    "tslint": "^5.20.1",
-    "tslint-config-standard": "^7.1.0",
-    "typedoc": "^0.15.8",
-    "typescript": "^3.6.3"
+    "@types/got": "8.3.5",
+    "@types/jest": "23.1.1",
+    "@types/node": "10.17.17",
+    "eslint": "5.16.0",
+    "gh-pages": "1.2.0",
+    "husky": "0.14.3",
+    "jest": "23.1.0",
+    "lint-staged": "7.2.0",
+    "rimraf": "2.7.1",
+    "ts-jest": "22.4.6",
+    "tslint": "5.20.1",
+    "tslint-config-standard": "7.1.0",
+    "typedoc": "0.15.8",
+    "typescript": "3.6.3"
   }
 }
