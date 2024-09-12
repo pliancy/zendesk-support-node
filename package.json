@@ -40,7 +40,7 @@
     "@types/node": "10.17.17",
     "eslint": "5.16.0",
     "gh-pages": "1.2.0",
-    "husky": "0.14.3",
+    "husky": "9.1.6",
     "jest": "23.1.0",
     "lint-staged": "15.1.0",
     "rimraf": "2.7.1",
