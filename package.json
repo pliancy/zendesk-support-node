@@ -32,7 +32,7 @@
     "url": "https://github.com/calebalbers/zendesk-support"
   },
   "dependencies": {
-    "got": "13.0.0"
+    "got": "14.4.3"
   },
   "devDependencies": {
     "@types/got": "8.3.5",
