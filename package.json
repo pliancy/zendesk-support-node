@@ -35,23 +35,23 @@
     "got": "13.0.0"
   },
   "devDependencies": {
-    "@types/got": "8.3.5",
+    "@types/got": "8.3.6",
     "@types/jest": "23.1.1",
-    "@types/node": "10.17.17",
+    "@types/node": "10.17.60",
     "eslint": "5.16.0",
     "gh-pages": "1.2.0",
     "husky": "0.14.3",
     "jest": "23.1.0",
-    "lint-staged": "15.1.0",
+    "lint-staged": "15.2.10",
     "rimraf": "2.7.1",
     "ts-jest": "22.4.6",
     "tslint": "5.20.1",
     "tslint-config-standard": "7.1.0",
-    "typedoc": "0.25.0",
-    "typescript": "3.6.3"
+    "typedoc": "0.26.10",
+    "typescript": "3.9.10"
   },
   "volta": {
-    "node": "20.9.0",
-    "yarn": "1.22.21"
+    "node": "20.18.0",
+    "yarn": "1.22.22"
   }
 }
