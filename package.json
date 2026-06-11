@@ -1,5 +1,5 @@
 {
-  "name": "zendesk-support",
+  "name": "@pliancy/zendesk-sdk",
   "version": "1.0.0",
   "description": "Promise-based wrapper for the Zendesk Support API with support for TypeScript types.",
   "main": "./lib/index.js",
@@ -39,7 +39,7 @@
     "@types/jest": "23.1.1",
     "@types/node": "10.17.17",
     "eslint": "5.16.0",
-    "gh-pages": "1.2.0",
+    "gh-pages": "5.0.0",
     "husky": "0.14.3",
     "jest": "23.1.0",
     "lint-staged": "15.1.0",
@@ -51,7 +51,7 @@
     "typescript": "3.6.3"
   },
   "volta": {
-    "node": "20.9.0",
+    "node": "24.16.0",
     "yarn": "1.22.21"
   }
 }
