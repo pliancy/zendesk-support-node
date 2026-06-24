@@ -43,6 +43,6 @@ jobs:
           commit_message: ${{ github.event.head_commit.message }} [skip ci]
           commit_options: '--no-verify'
           file_pattern: package.json
-          skip_dirty_check: false
+          skip_dirty_check: true
           skip_fetch: true
           push_options: --force-with-lease

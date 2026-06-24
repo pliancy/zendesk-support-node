@@ -14,9 +14,18 @@ export class Groups {
             return [data.group]
         }
 
-        const url = userId !== undefined ? `/users/${userId}/groups.json` : `${this.baseUrl}.json`
-        const { data } = await this.http.get<{ groups: Group[] }>(url)
-        return data.groups
+        type Page = { groups: Group[]; next_page: string | null }
+        const results: Group[] = []
+        let nextPage: string | null =
+            userId !== undefined ? `/users/${userId}/groups.json` : `${this.baseUrl}.json`
+
+        while (nextPage !== null) {
+            const page: Page = (await this.http.get<Page>(nextPage)).data
+            results.push(...page.groups)
+            nextPage = page.next_page
+        }
+
+        return results
     }
 
     async create(group: Group): Promise<Group> {

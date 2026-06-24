@@ -20,9 +20,20 @@ describe('Groups', () => {
 
     describe('list', () => {
         it('lists all groups', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { groups: mockGroups } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { groups: mockGroups, next_page: null },
+            })
             await expect(groups.list()).resolves.toEqual(mockGroups)
             expect(mockAxios.get).toHaveBeenCalledWith('/groups.json')
+        })
+
+        it('paginates through multiple pages', async () => {
+            jest.spyOn(mockAxios, 'get')
+                .mockResolvedValueOnce({
+                    data: { groups: [mockGroups[0]], next_page: '/groups.json?page=2' },
+                })
+                .mockResolvedValueOnce({ data: { groups: [mockGroups[1]], next_page: null } })
+            await expect(groups.list()).resolves.toEqual(mockGroups)
         })
 
         it('lists groups by groupId (wraps singular response in array)', async () => {
@@ -32,7 +43,9 @@ describe('Groups', () => {
         })
 
         it('lists groups by userId', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { groups: mockGroups } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { groups: mockGroups, next_page: null },
+            })
             await expect(groups.list(undefined, 42)).resolves.toEqual(mockGroups)
             expect(mockAxios.get).toHaveBeenCalledWith('/users/42/groups.json')
         })
