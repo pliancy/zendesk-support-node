@@ -38,5 +38,5 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org/
       - run: yarn
-      - run: npm run build
-      - run: npm publish
+      - run: yarn build
+      - run: yarn publish
