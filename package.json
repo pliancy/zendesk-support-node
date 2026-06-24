@@ -1,16 +1,16 @@
 {
   "name": "@pliancy/zendesk-sdk",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Promise-based wrapper for the Zendesk Support API with support for TypeScript types.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
     "clean": "rimraf lib",
     "lint": "tslint --project '.'",
-    "test": "npm run lint && jest",
+    "test": "yarn lint && jest",
     "docs": "rimraf ./docs && typedoc src/ --out docs --mode modules --module commonjs --target es6 --excludePrivate && touch ./docs/.nojekyll && gh-pages -d docs -t",
-    "build": "npm run clean && npm run test && tsc",
-    "prepublish": "npm run build",
+    "build": "yarn clean && yarn test && tsc",
+    "prepublish": "yarn build",
     "precommit": "lint-staged"
   },
   "lint-staged": {
