@@ -29,7 +29,9 @@ describe('Views', () => {
 
         it('paginates through multiple pages', async () => {
             jest.spyOn(mockAxios, 'get')
-                .mockResolvedValueOnce({ data: { views: [mockViews[0]], next_page: '/views.json?page=2' } })
+                .mockResolvedValueOnce({
+                    data: { views: [mockViews[0]], next_page: '/views.json?page=2' },
+                })
                 .mockResolvedValueOnce({ data: { views: [mockViews[1]], next_page: null } })
             await expect(views.list()).resolves.toEqual(mockViews)
         })
@@ -40,7 +42,9 @@ describe('Views', () => {
             const newView: View = { id: 3, title: 'Urgent Tickets' }
             jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { view: newView } })
             await expect(views.create({ title: 'Urgent Tickets' })).resolves.toEqual(newView)
-            expect(mockAxios.post).toHaveBeenCalledWith('/views.json', { view: { title: 'Urgent Tickets' } })
+            expect(mockAxios.post).toHaveBeenCalledWith('/views.json', {
+                view: { title: 'Urgent Tickets' },
+            })
         })
     })
 
@@ -49,7 +53,9 @@ describe('Views', () => {
             const updated: View = { id: 1, title: 'All Open Tickets' }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { view: updated } })
             await expect(views.update(1, { title: 'All Open Tickets' })).resolves.toEqual(updated)
-            expect(mockAxios.put).toHaveBeenCalledWith('/views/1.json', { view: { title: 'All Open Tickets' } })
+            expect(mockAxios.put).toHaveBeenCalledWith('/views/1.json', {
+                view: { title: 'All Open Tickets' },
+            })
         })
     })
 

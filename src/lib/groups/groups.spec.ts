@@ -25,8 +25,8 @@ describe('Groups', () => {
             expect(mockAxios.get).toHaveBeenCalledWith('/groups.json')
         })
 
-        it('lists groups by groupId', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { groups: [mockGroups[0]] } })
+        it('lists groups by groupId (wraps singular response in array)', async () => {
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { group: mockGroups[0] } })
             await expect(groups.list(1)).resolves.toEqual([mockGroups[0]])
             expect(mockAxios.get).toHaveBeenCalledWith('/groups/1.json')
         })
@@ -43,7 +43,9 @@ describe('Groups', () => {
             const newGroup: Group = { id: 3, name: 'New Group' }
             jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { group: newGroup } })
             await expect(groups.create({ name: 'New Group' })).resolves.toEqual(newGroup)
-            expect(mockAxios.post).toHaveBeenCalledWith('/groups.json', { group: { name: 'New Group' } })
+            expect(mockAxios.post).toHaveBeenCalledWith('/groups.json', {
+                group: { name: 'New Group' },
+            })
         })
     })
 
@@ -52,7 +54,9 @@ describe('Groups', () => {
             const updated: Group = { id: 1, name: 'Updated Support' }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { group: updated } })
             await expect(groups.update(1, { name: 'Updated Support' })).resolves.toEqual(updated)
-            expect(mockAxios.put).toHaveBeenCalledWith('/groups/1.json', { group: { name: 'Updated Support' } })
+            expect(mockAxios.put).toHaveBeenCalledWith('/groups/1.json', {
+                group: { name: 'Updated Support' },
+            })
         })
     })
 

@@ -41,7 +41,9 @@ describe('Organizations', () => {
 
     describe('find', () => {
         it('searches organizations by name', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { organizations: [mockOrgs[0]] } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { organizations: [mockOrgs[0]] },
+            })
             await expect(organizations.find('Acme')).resolves.toEqual([mockOrgs[0]])
             expect(mockAxios.get).toHaveBeenCalledWith('/organizations/autocomplete.json', {
                 params: { name: 'Acme' },
@@ -64,7 +66,9 @@ describe('Organizations', () => {
         it('updates an organization', async () => {
             const updated: Organization = { id: 1, name: 'Acme Corp Updated' }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { organization: updated } })
-            await expect(organizations.update(1, { name: 'Acme Corp Updated' })).resolves.toEqual(updated)
+            await expect(organizations.update(1, { name: 'Acme Corp Updated' })).resolves.toEqual(
+                updated,
+            )
             expect(mockAxios.put).toHaveBeenCalledWith('/organizations/1.json', {
                 organization: { name: 'Acme Corp Updated' },
             })

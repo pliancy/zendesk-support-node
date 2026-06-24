@@ -21,7 +21,9 @@ export class Triggers {
     }
 
     async create(trigger: Trigger): Promise<Trigger> {
-        const { data } = await this.http.post<{ trigger: Trigger }>(`${this.baseUrl}.json`, { trigger })
+        const { data } = await this.http.post<{ trigger: Trigger }>(`${this.baseUrl}.json`, {
+            trigger,
+        })
         return data.trigger
     }
 

@@ -26,7 +26,9 @@ export class Views {
     }
 
     async update(viewId: number, view: View): Promise<View> {
-        const { data } = await this.http.put<{ view: View }>(`${this.baseUrl}/${viewId}.json`, { view })
+        const { data } = await this.http.put<{ view: View }>(`${this.baseUrl}/${viewId}.json`, {
+            view,
+        })
         return data.view
     }
 

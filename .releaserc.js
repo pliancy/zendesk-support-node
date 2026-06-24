@@ -6,7 +6,7 @@ const dateArgs = {
   minute: 'numeric',
 }
 
-const message = `Release: <%= nextRelease.version %> - <%= new Date().toLocaleDateString('en-US', ${dateArgs}) %> [skip ci]`
+const message = `Release: <%= nextRelease.version %> - <%= new Date().toLocaleDateString('en-US', ${JSON.stringify(dateArgs)}) %> [skip ci]`
 
 module.exports = {
   branches: ['main', 'master', {

@@ -29,7 +29,9 @@ describe('Brands', () => {
 
         it('paginates through multiple pages', async () => {
             jest.spyOn(mockAxios, 'get')
-                .mockResolvedValueOnce({ data: { brands: [mockBrands[0]], next_page: '/brands.json?page=2' } })
+                .mockResolvedValueOnce({
+                    data: { brands: [mockBrands[0]], next_page: '/brands.json?page=2' },
+                })
                 .mockResolvedValueOnce({ data: { brands: [mockBrands[1]], next_page: null } })
             await expect(brands.list()).resolves.toEqual(mockBrands)
         })
@@ -39,7 +41,9 @@ describe('Brands', () => {
         it('creates a brand', async () => {
             const newBrand: Brand = { id: 3, name: 'New Brand', subdomain: 'newbrand' }
             jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { brand: newBrand } })
-            await expect(brands.create({ name: 'New Brand', subdomain: 'newbrand' })).resolves.toEqual(newBrand)
+            await expect(
+                brands.create({ name: 'New Brand', subdomain: 'newbrand' }),
+            ).resolves.toEqual(newBrand)
             expect(mockAxios.post).toHaveBeenCalledWith('/brands.json', {
                 brand: { name: 'New Brand', subdomain: 'newbrand' },
             })
@@ -50,7 +54,9 @@ describe('Brands', () => {
         it('updates a brand', async () => {
             const updated: Brand = { id: 1, name: 'Updated Brand', subdomain: 'main' }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { brand: updated } })
-            await expect(brands.update(1, { name: 'Updated Brand', subdomain: 'main' })).resolves.toEqual(updated)
+            await expect(
+                brands.update(1, { name: 'Updated Brand', subdomain: 'main' }),
+            ).resolves.toEqual(updated)
             expect(mockAxios.put).toHaveBeenCalledWith('/brands/1.json', {
                 brand: { name: 'Updated Brand', subdomain: 'main' },
             })

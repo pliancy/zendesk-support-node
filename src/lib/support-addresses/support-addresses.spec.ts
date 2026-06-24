@@ -30,7 +30,10 @@ describe('SupportAddresses', () => {
         it('paginates through multiple pages', async () => {
             jest.spyOn(mockAxios, 'get')
                 .mockResolvedValueOnce({
-                    data: { recipient_addresses: [mockAddresses[0]], next_page: '/recipient_addresses.json?page=2' },
+                    data: {
+                        recipient_addresses: [mockAddresses[0]],
+                        next_page: '/recipient_addresses.json?page=2',
+                    },
                 })
                 .mockResolvedValueOnce({
                     data: { recipient_addresses: [mockAddresses[1]], next_page: null },
@@ -42,8 +45,12 @@ describe('SupportAddresses', () => {
     describe('create', () => {
         it('creates a support address', async () => {
             const newAddr: SupportAddress = { id: 3, email: 'new@example.com' }
-            jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { recipient_address: newAddr } })
-            await expect(supportAddresses.create({ email: 'new@example.com' })).resolves.toEqual(newAddr)
+            jest.spyOn(mockAxios, 'post').mockResolvedValue({
+                data: { recipient_address: newAddr },
+            })
+            await expect(supportAddresses.create({ email: 'new@example.com' })).resolves.toEqual(
+                newAddr,
+            )
             expect(mockAxios.post).toHaveBeenCalledWith('/recipient_addresses.json', {
                 recipient_address: { email: 'new@example.com' },
             })
@@ -52,10 +59,17 @@ describe('SupportAddresses', () => {
 
     describe('update', () => {
         it('updates a support address', async () => {
-            const updated: SupportAddress = { id: 1, email: 'support@example.com', name: 'Updated Support' }
+            const updated: SupportAddress = {
+                id: 1,
+                email: 'support@example.com',
+                name: 'Updated Support',
+            }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { recipient_address: updated } })
             await expect(
-                supportAddresses.update(1, { email: 'support@example.com', name: 'Updated Support' }),
+                supportAddresses.update(1, {
+                    email: 'support@example.com',
+                    name: 'Updated Support',
+                }),
             ).resolves.toEqual(updated)
             expect(mockAxios.put).toHaveBeenCalledWith('/recipient_addresses/1.json', {
                 recipient_address: { email: 'support@example.com', name: 'Updated Support' },
@@ -65,7 +79,11 @@ describe('SupportAddresses', () => {
 
     describe('verify', () => {
         it('verifies a support address', async () => {
-            const addr: SupportAddress = { id: 1, email: 'support@example.com', forward_status: 'verified' }
+            const addr: SupportAddress = {
+                id: 1,
+                email: 'support@example.com',
+                forward_status: 'verified',
+            }
             jest.spyOn(mockAxios, 'put').mockResolvedValue({ data: { recipient_address: addr } })
             await expect(supportAddresses.verify(1)).resolves.toEqual(addr)
             expect(mockAxios.put).toHaveBeenCalledWith('/recipient_addresses/1/verify.json', {

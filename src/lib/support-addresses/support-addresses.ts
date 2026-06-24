@@ -28,7 +28,10 @@ export class SupportAddresses {
         return data.recipient_address
     }
 
-    async update(supportAddressId: number, supportAddress: SupportAddress): Promise<SupportAddress> {
+    async update(
+        supportAddressId: number,
+        supportAddress: SupportAddress,
+    ): Promise<SupportAddress> {
         const { data } = await this.http.put<{ recipient_address: SupportAddress }>(
             `${this.baseUrl}/${supportAddressId}.json`,
             { recipient_address: supportAddress },

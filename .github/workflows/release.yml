@@ -45,4 +45,4 @@ jobs:
           file_pattern: package.json
           skip_dirty_check: false
           skip_fetch: true
-          push_options: --force
+          push_options: --force-with-lease

@@ -7,16 +7,14 @@ export class Groups {
     constructor(private readonly http: AxiosInstance) {}
 
     async list(groupId?: number, userId?: number): Promise<Group[]> {
-        let url: string
-
         if (groupId !== undefined) {
-            url = `${this.baseUrl}/${groupId}.json`
-        } else if (userId !== undefined) {
-            url = `/users/${userId}/groups.json`
-        } else {
-            url = `${this.baseUrl}.json`
+            const { data } = await this.http.get<{ group: Group }>(
+                `${this.baseUrl}/${groupId}.json`,
+            )
+            return [data.group]
         }
 
+        const url = userId !== undefined ? `/users/${userId}/groups.json` : `${this.baseUrl}.json`
         const { data } = await this.http.get<{ groups: Group[] }>(url)
         return data.groups
     }
@@ -27,7 +25,9 @@ export class Groups {
     }
 
     async update(groupId: number, group: Group): Promise<Group> {
-        const { data } = await this.http.put<{ group: Group }>(`${this.baseUrl}/${groupId}.json`, { group })
+        const { data } = await this.http.put<{ group: Group }>(`${this.baseUrl}/${groupId}.json`, {
+            group,
+        })
         return data.group
     }
 

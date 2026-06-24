@@ -20,19 +20,25 @@ describe('GroupMemberships', () => {
 
     describe('list', () => {
         it('lists all group memberships', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { group_memberships: mockMemberships } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { group_memberships: mockMemberships },
+            })
             await expect(groupMemberships.list()).resolves.toEqual(mockMemberships)
             expect(mockAxios.get).toHaveBeenCalledWith('/group_memberships.json')
         })
 
         it('lists memberships by groupId', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { group_memberships: [mockMemberships[0]] } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { group_memberships: [mockMemberships[0]] },
+            })
             await expect(groupMemberships.list(1)).resolves.toEqual([mockMemberships[0]])
             expect(mockAxios.get).toHaveBeenCalledWith('/groups/1/memberships.json')
         })
 
         it('lists memberships by userId', async () => {
-            jest.spyOn(mockAxios, 'get').mockResolvedValue({ data: { group_memberships: mockMemberships } })
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { group_memberships: mockMemberships },
+            })
             await expect(groupMemberships.list(undefined, 10)).resolves.toEqual(mockMemberships)
             expect(mockAxios.get).toHaveBeenCalledWith('/users/10/group_memberships.json')
         })
@@ -41,8 +47,12 @@ describe('GroupMemberships', () => {
     describe('create', () => {
         it('creates a group membership', async () => {
             const newMembership: GroupMembership = { id: 3, user_id: 12, group_id: 1 }
-            jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { group_membership: newMembership } })
-            await expect(groupMemberships.create({ user_id: 12, group_id: 1 })).resolves.toEqual(newMembership)
+            jest.spyOn(mockAxios, 'post').mockResolvedValue({
+                data: { group_membership: newMembership },
+            })
+            await expect(groupMemberships.create({ user_id: 12, group_id: 1 })).resolves.toEqual(
+                newMembership,
+            )
             expect(mockAxios.post).toHaveBeenCalledWith('/group_memberships.json', {
                 group_membership: { user_id: 12, group_id: 1 },
             })

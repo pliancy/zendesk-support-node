@@ -29,7 +29,9 @@ describe('Triggers', () => {
 
         it('paginates through multiple pages', async () => {
             jest.spyOn(mockAxios, 'get')
-                .mockResolvedValueOnce({ data: { triggers: [mockTriggers[0]], next_page: '/triggers.json?page=2' } })
+                .mockResolvedValueOnce({
+                    data: { triggers: [mockTriggers[0]], next_page: '/triggers.json?page=2' },
+                })
                 .mockResolvedValueOnce({ data: { triggers: [mockTriggers[1]], next_page: null } })
             await expect(triggers.list()).resolves.toEqual(mockTriggers)
         })
@@ -39,7 +41,9 @@ describe('Triggers', () => {
         it('creates a trigger', async () => {
             const newTrigger: Trigger = { id: 3, title: 'Auto-assign ticket' }
             jest.spyOn(mockAxios, 'post').mockResolvedValue({ data: { trigger: newTrigger } })
-            await expect(triggers.create({ title: 'Auto-assign ticket' })).resolves.toEqual(newTrigger)
+            await expect(triggers.create({ title: 'Auto-assign ticket' })).resolves.toEqual(
+                newTrigger,
+            )
             expect(mockAxios.post).toHaveBeenCalledWith('/triggers.json', {
                 trigger: { title: 'Auto-assign ticket' },
             })

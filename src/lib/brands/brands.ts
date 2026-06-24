@@ -26,7 +26,9 @@ export class Brands {
     }
 
     async update(brandId: number, brand: Brand): Promise<Brand> {
-        const { data } = await this.http.put<{ brand: Brand }>(`${this.baseUrl}/${brandId}.json`, { brand })
+        const { data } = await this.http.put<{ brand: Brand }>(`${this.baseUrl}/${brandId}.json`, {
+            brand,
+        })
         return data.brand
     }
 
