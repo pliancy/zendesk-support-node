@@ -11,7 +11,7 @@ repository:
   description: NodeJS SDK for the Zendesk Support API
 
   # A URL with more information about the repository
-  homepage: https://www.npmjs.com/package/zendesk-support
+  homepage: https://www.npmjs.com/package/@pliancy/zendesk-sdk
 
   # A comma-separated list of topics to set on the repository
   topics: nodejs, module, rest-api, zendesk, zendesk-support

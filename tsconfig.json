@@ -1,24 +1,30 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "es5",
-    "module": "commonjs",
-    "lib": [
-      "es2015",
-      "es2016",
-      "es2017",
-      "dom"
-    ],
-    "strict": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "outDir": "lib",
-    "skipLibCheck": true
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "src/**/*.test.ts"
-  ]
+    "compilerOptions": {
+        "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
+        "target": "es2019",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "declaration": true,
+        "pretty": true,
+        "newLine": "lf",
+        "checkJs": true,
+        "allowJs": true,
+        "esModuleInterop": true,
+        "removeComments": false,
+        "stripInternal": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noEmitOnError": true,
+        "useDefineForClassFields": false,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "outDir": "./dist",
+        "types": ["node", "jest"]
+    },
+    "include": ["src"]
 }

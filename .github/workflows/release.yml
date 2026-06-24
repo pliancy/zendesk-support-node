@@ -1,0 +1,48 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write # required for OIDC
+  # required for semantic-release
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PLIBOT_PAT }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: yarn --ignore-scripts
+      - name: Build
+        run: yarn build
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn semantic-release
+      # Commit changes to package.json and README.md
+      - name: Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v7
+        env:
+          SKIP_COMMITIZEN: true
+        with:
+          commit_message: ${{ github.event.head_commit.message }} [skip ci]
+          commit_options: '--no-verify'
+          file_pattern: package.json
+          skip_dirty_check: false
+          skip_fetch: true
+          push_options: --force
