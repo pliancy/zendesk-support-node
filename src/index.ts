@@ -703,7 +703,8 @@ export class Zendesk {
         while (url) {
           responseBody = await got(url, {
             ...options,
-            auth: `${this.config.username}:${this.config.password}` // take care of basic auth
+            username: this.config.username,
+            password: this.config.password
           })
           responseBody = JSON.parse(responseBody.body)
           res = res.concat(responseBody[paginationKey])
@@ -712,7 +713,8 @@ export class Zendesk {
       } else {
         res = await got(url, {
           ...options,
-          auth: `${this.config.username}:${this.config.password}` // take care of basic auth
+          username: this.config.username,
+          password: this.config.password
         })
       }
 
