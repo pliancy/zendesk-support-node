@@ -11,7 +11,7 @@ export class Views {
         const results: View[] = []
         let nextPage: string | null = `${this.baseUrl}.json`
 
-        while (nextPage !== null) {
+        while (nextPage) {
             const page: Page = (await this.http.get<Page>(nextPage)).data
             results.push(...page.views)
             nextPage = page.next_page

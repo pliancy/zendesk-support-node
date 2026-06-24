@@ -11,7 +11,7 @@ export class Triggers {
         const results: Trigger[] = []
         let nextPage: string | null = `${this.baseUrl}.json`
 
-        while (nextPage !== null) {
+        while (nextPage) {
             const page: Page = (await this.http.get<Page>(nextPage)).data
             results.push(...page.triggers)
             nextPage = page.next_page

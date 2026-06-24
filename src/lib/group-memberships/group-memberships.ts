@@ -5,18 +5,22 @@ export class GroupMemberships {
     constructor(private readonly http: AxiosInstance) {}
 
     async list(groupId?: number, userId?: number): Promise<GroupMembership[]> {
-        let url: string
+        type Page = { group_memberships: GroupMembership[]; next_page: string | null }
+        const results: GroupMembership[] = []
+        let nextPage: string | null =
+            groupId !== undefined
+                ? `/groups/${groupId}/memberships.json`
+                : userId !== undefined
+                  ? `/users/${userId}/group_memberships.json`
+                  : `/group_memberships.json`
 
-        if (groupId !== undefined) {
-            url = `/groups/${groupId}/memberships.json`
-        } else if (userId !== undefined) {
-            url = `/users/${userId}/group_memberships.json`
-        } else {
-            url = `/group_memberships.json`
+        while (nextPage) {
+            const page: Page = (await this.http.get<Page>(nextPage)).data
+            results.push(...page.group_memberships)
+            nextPage = page.next_page
         }
 
-        const { data } = await this.http.get<{ group_memberships: GroupMembership[] }>(url)
-        return data.group_memberships
+        return results
     }
 
     async create(groupMembership: GroupMembership): Promise<GroupMembership> {

@@ -21,15 +21,29 @@ describe('GroupMemberships', () => {
     describe('list', () => {
         it('lists all group memberships', async () => {
             jest.spyOn(mockAxios, 'get').mockResolvedValue({
-                data: { group_memberships: mockMemberships },
+                data: { group_memberships: mockMemberships, next_page: null },
             })
             await expect(groupMemberships.list()).resolves.toEqual(mockMemberships)
             expect(mockAxios.get).toHaveBeenCalledWith('/group_memberships.json')
         })
 
+        it('paginates through multiple pages', async () => {
+            jest.spyOn(mockAxios, 'get')
+                .mockResolvedValueOnce({
+                    data: {
+                        group_memberships: [mockMemberships[0]],
+                        next_page: '/group_memberships.json?page=2',
+                    },
+                })
+                .mockResolvedValueOnce({
+                    data: { group_memberships: [mockMemberships[1]], next_page: null },
+                })
+            await expect(groupMemberships.list()).resolves.toEqual(mockMemberships)
+        })
+
         it('lists memberships by groupId', async () => {
             jest.spyOn(mockAxios, 'get').mockResolvedValue({
-                data: { group_memberships: [mockMemberships[0]] },
+                data: { group_memberships: [mockMemberships[0]], next_page: null },
             })
             await expect(groupMemberships.list(1)).resolves.toEqual([mockMemberships[0]])
             expect(mockAxios.get).toHaveBeenCalledWith('/groups/1/memberships.json')
@@ -37,7 +51,7 @@ describe('GroupMemberships', () => {
 
         it('lists memberships by userId', async () => {
             jest.spyOn(mockAxios, 'get').mockResolvedValue({
-                data: { group_memberships: mockMemberships },
+                data: { group_memberships: mockMemberships, next_page: null },
             })
             await expect(groupMemberships.list(undefined, 10)).resolves.toEqual(mockMemberships)
             expect(mockAxios.get).toHaveBeenCalledWith('/users/10/group_memberships.json')

@@ -19,7 +19,7 @@ export class Groups {
         let nextPage: string | null =
             userId !== undefined ? `/users/${userId}/groups.json` : `${this.baseUrl}.json`
 
-        while (nextPage !== null) {
+        while (nextPage) {
             const page: Page = (await this.http.get<Page>(nextPage)).data
             results.push(...page.groups)
             nextPage = page.next_page

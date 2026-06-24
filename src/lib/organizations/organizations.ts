@@ -11,7 +11,7 @@ export class Organizations {
         const results: Organization[] = []
         let nextPage: string | null = `${this.baseUrl}.json`
 
-        while (nextPage !== null) {
+        while (nextPage) {
             const page: Page = (await this.http.get<Page>(nextPage)).data
             results.push(...page.organizations)
             nextPage = page.next_page
