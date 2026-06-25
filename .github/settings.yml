@@ -5,7 +5,7 @@ repository:
   # See https://developer.github.com/v3/repos/#edit for all available settings.
 
   # The name of the repository. Changing this will rename the repository
-  name: zendesk-support-node
+  name: zendesk-sdk
 
   # A short description of the repository that will show up on GitHub
   description: NodeJS SDK for the Zendesk Support API
