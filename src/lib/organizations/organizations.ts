@@ -28,6 +28,14 @@ export class Organizations {
         return data.organizations
     }
 
+    async findByExternalId(externalId: string): Promise<Organization[]> {
+        const { data } = await this.http.get<{ organizations: Organization[] }>(
+            `${this.baseUrl}/search.json`,
+            { params: { external_id: externalId } },
+        )
+        return data.organizations
+    }
+
     async create(organization: Organization): Promise<Organization> {
         const { data } = await this.http.post<{ organization: Organization }>(
             `${this.baseUrl}.json`,

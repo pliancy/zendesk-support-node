@@ -51,6 +51,20 @@ describe('Organizations', () => {
         })
     })
 
+    describe('findByExternalId', () => {
+        it('searches organizations by external id', async () => {
+            jest.spyOn(mockAxios, 'get').mockResolvedValue({
+                data: { organizations: [mockOrgs[0]] },
+            })
+            await expect(organizations.findByExternalId('client-123')).resolves.toEqual([
+                mockOrgs[0],
+            ])
+            expect(mockAxios.get).toHaveBeenCalledWith('/organizations/search.json', {
+                params: { external_id: 'client-123' },
+            })
+        })
+    })
+
     describe('create', () => {
         it('creates an organization', async () => {
             const newOrg: Organization = { id: 3, name: 'New Co' }
